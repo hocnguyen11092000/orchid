@@ -1,0 +1,80 @@
+@use "../../../../scss/" as *;
+
+.detail-product {
+  background-color: rgb(240, 240, 240);
+  height: auto;
+  min-height: 100vh;
+  padding: 20px;
+
+  &-description {
+    margin-top: 20px;
+    padding-left: 8px;
+    font-size: 1rem;
+    word-spacing: 2px;
+    text-align: left;
+
+    & figure {
+      text-align: center;
+      margin: 10px 0;
+    }
+  }
+
+  &__left,
+  &__right {
+    min-height: 300px;
+    height: auto;
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__right {
+    &-quantity-form {
+      &-add-cart {
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        background-color: $main-color;
+        color: $txt-color;
+        cursor: pointer;
+        padding: 8px 12px;
+        display: block;
+        margin-top: 10px;
+      }
+    }
+
+    &-price {
+      margin: 10px 0;
+      display: inline-block;
+      font-size: 1.5rem;
+
+      &-discount {
+        font-weight: 500;
+        padding: 5px 8px;
+        border-radius: 5px;
+        color: $txt-color;
+        background-color: $red;
+        font-size: 1rem;
+        display: inline-block;
+        margin-left: 10px;
+        transform: translateY(-5px);
+      }
+    }
+
+    &-name {
+      font-size: 1.5rem;
+      margin-top: 20px;
+    }
+  }
+}
+
+.quantity-input {
+  border: 1px solid #ccc;
+  outline: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  width: 150px;
+}

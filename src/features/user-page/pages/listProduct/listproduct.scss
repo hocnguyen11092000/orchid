@@ -1,0 +1,39 @@
+@use "../../../../scss/" as *;
+.list-product {
+  padding: 20px;
+}
+
+.wrapper-product {
+  height: auto;
+  min-height: 100vh;
+}
+
+.category-list {
+  & li {
+    margin: 5px 0;
+    padding: 5px 5px 5px 15px;
+    border-radius: 5px;
+    transition: 0.5s $transition-cubic;
+    cursor: pointer;
+    margin-left: 20px;
+  }
+
+  & li:hover {
+    background-color: $main-color;
+    color: $txt-color;
+  }
+}
+
+.reset {
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 5px;
+  color: $txt-color;
+  background-color: $main-color;
+  display: inline-block;
+  margin: 10px 0;
+}
+
+.price-range {
+  margin: 10px 0;
+}

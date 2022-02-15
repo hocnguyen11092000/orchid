@@ -1,0 +1,8 @@
+@use "../../../scss/" as *;
+
+.order {
+  padding: 20px;
+  margin: 20px;
+  box-shadow: $box-shadow;
+  border-radius: 10px;
+}

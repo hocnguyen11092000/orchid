@@ -1,0 +1,80 @@
+@use "../../../../scss/" as *;
+
+.add-edit {
+  padding: 20px;
+  margin: 20px !important;
+  margin: 0 auto;
+  box-shadow: $box-shadow;
+  border-radius: 10px;
+
+  &__form {
+    width: 100%;
+    margin: 0 auto;
+
+    &-heading {
+      margin: 10px 0 20px 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    &-content {
+      display: flex;
+      align-items: flex-start;
+      flex-wrap: wrap;
+
+      & img {
+        margin-left: 20px;
+        width: 300px;
+        height: 300px;
+        object-fit: cover;
+      }
+    }
+
+    &-form-group {
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      & label {
+        display: inline-block;
+        min-width: 100px;
+        font-size: 1.2 rem;
+      }
+      & input {
+        padding: 10px 12px;
+        border: 1px solid #ccc;
+        outline: none;
+        border-radius: 5px;
+        width: 400px;
+      }
+
+      & input[type="file"] {
+        outline: none;
+        border: none;
+
+        padding-left: 0;
+      }
+
+      & button {
+        border: none;
+        outline: none;
+        padding: 8px 12px;
+        color: $txt-color;
+        background-color: $main-color;
+        border-radius: 5px;
+        font-size: 1rem;
+        margin-top: 10px;
+        cursor: pointer;
+        margin-bottom: 20px;
+      }
+    }
+  }
+}
+
+.ck.ck-editor__main {
+  height: 200px;
+  width: 800px;
+}
+.ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-editor__editable_inline.ck-blurred {
+  height: 100%;
+  width: 100%;
+}

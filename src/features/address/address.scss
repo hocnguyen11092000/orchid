@@ -1,0 +1,13 @@
+@use "../../scss" as *;
+
+.address {
+  padding: 20px;
+  margin: 20px;
+  border-radius: 10px;
+  box-shadow: $box-shadow;
+
+  &__heading {
+    font-weight: 500;
+    margin: 20px 0;
+  }
+}

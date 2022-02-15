@@ -1,0 +1,18 @@
+.product-item {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  padding: 20px;
+  height: 265px;
+  max-height: 265px;
+  cursor: pointer;
+  overflow: hidden;
+
+  &__price {
+    margin: 10px 0 5px 0;
+    font-size: 1rem;
+  }
+
+  &__name {
+    font-size: 0.9rem;
+  }
+}

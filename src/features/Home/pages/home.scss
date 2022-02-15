@@ -1,0 +1,85 @@
+@use "../../../scss/" as *;
+
+.home {
+  margin: 20px !important;
+  max-width: 100%;
+
+  &__char {
+    border-radius: 10px;
+    box-shadow: $box-shadow;
+    height: calc(100% - 40px);
+    padding: 20px;
+    margin-top: 20px;
+  }
+
+  &__recent-order {
+    font-weight: 500;
+    margin: 20px 0;
+
+    & h2 {
+      font-weight: 600;
+    }
+  }
+
+  &__card-container {
+    display: flex;
+    flex-wrap: wrap;
+
+    &-card {
+      position: relative;
+      padding: 40px;
+      padding-left: 15px;
+      display: flex;
+      align-items: center;
+      margin: 20px;
+      box-shadow: $box-shadow;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-left: 0 !important;
+      min-width: 240px;
+      max-width: 240px;
+
+      &-name {
+        margin-top: 10px;
+        font-size: 1.3rem;
+        z-index: 1;
+        position: relative;
+        text-transform: uppercase;
+      }
+
+      &-badge {
+        width: 1.5rem;
+        margin-right: 15px;
+        z-index: 1;
+      }
+
+      &-total {
+        position: relative;
+        font-size: 1.5rem;
+        z-index: 15;
+      }
+    }
+
+    &-card::before {
+      content: "";
+      width: 100%;
+      padding-top: calc(100% + 40px);
+      border-radius: 50%;
+      background-color: $main-color;
+      z-index: 0;
+      position: absolute;
+      left: calc(-50%);
+      top: 0;
+      transform: scale(0);
+      transition: transform 0.8s ease 0s;
+    }
+
+    &-card:hover::before {
+      transform: scale(3);
+    }
+
+    &-card:hover {
+      color: $txt-color;
+    }
+  }
+}

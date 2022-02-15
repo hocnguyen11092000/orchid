@@ -1,0 +1,55 @@
+@use "../../../scss/" as *;
+.product-list {
+  padding: 20px;
+  margin: 20px;
+  border-radius: 10px;
+  box-shadow: $box-shadow;
+
+  &__heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &-title {
+      font-weight: 500;
+      margin: 15px 0;
+    }
+
+    &-search {
+      margin-right: 117px;
+
+      &-form {
+        &-form-group {
+          input {
+            padding: 6px 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+          }
+
+          button {
+            margin-left: 5px;
+            padding: 6px 10px;
+            border: 1px solid $second-color;
+            background-color: $second-color;
+            color: $txt-color;
+            border-radius: 5px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}
+
+.loading {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  font-size: 2rem;
+  background-color: rgb(245, 245, 250);
+}

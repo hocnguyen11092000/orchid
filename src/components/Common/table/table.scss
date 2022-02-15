@@ -1,0 +1,124 @@
+@use "../../../scss/" as *;
+.table {
+  width: 100%;
+  min-height: 340px;
+}
+
+table,
+th,
+tr,
+td {
+  // border: 1px solid #ccc;
+  border-collapse: collapse;
+  text-align: center;
+  border: none !important;
+  outline: none;
+}
+
+th,
+td {
+  padding: 8px 10px;
+  outline: none;
+  border: none;
+  font-size: 0.9rem;
+}
+
+// tr:hover {
+//   background-color: $second-color;
+//   cursor: pointer;
+//   color: $txt-color;
+// }
+
+tr:nth-child(2n + 1) {
+  background-color: rgb(245, 245, 250);
+  border-radius: 5px;
+}
+
+td {
+  height: 55px;
+}
+
+thead tr {
+  background-color: #fff !important;
+  min-height: 40px;
+  border-radius: 5px;
+}
+
+table {
+  width: 95%;
+  // min-height: 340px;
+}
+
+.table-edit {
+  @include edit();
+}
+
+.table-delete {
+  @include delete();
+}
+
+.img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 20px;
+  margin-right: 160px;
+
+  &__list {
+    display: flex;
+    list-style-type: none;
+
+    &-item.active {
+      padding: 8px 12px;
+      border-radius: 5px;
+      background-color: $second-color;
+      color: $txt-color;
+    }
+    &-item {
+      background-color: #fff;
+      color: #333;
+      border: 1px solid $second-color;
+      padding: 8px 12px;
+      border-radius: 5px;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+  }
+}
+
+.Delivered {
+  padding: 5px 8px;
+  display: inline-block;
+  color: $txt-color;
+  border-radius: 5px;
+  background: $green;
+}
+
+.Processing {
+  padding: 5px 8px;
+  display: inline-block;
+  color: $txt-color;
+  border-radius: 5px;
+  background: $yellow;
+}
+
+.Refused {
+  padding: 5px 8px;
+  display: inline-block;
+  color: $txt-color;
+  border-radius: 5px;
+  background: $red;
+}
+
+.Shipping {
+  padding: 5px 8px;
+  display: inline-block;
+  color: $txt-color;
+  border-radius: 5px;
+  background: $second-color;
+}

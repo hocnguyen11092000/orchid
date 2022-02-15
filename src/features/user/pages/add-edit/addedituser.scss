@@ -1,0 +1,41 @@
+@use "../../../../scss/" as *;
+
+.add-edit-user {
+  padding: 20px;
+  margin: 20px;
+  box-shadow: $box-shadow;
+  border-radius: 10px;
+
+  &__heading {
+    margin: 10px 0 20px 0;
+    font-weight: 500;
+  }
+
+  &__form-group {
+    margin: 15px 0;
+
+    & label {
+      display: inline-block;
+      min-width: 200px;
+      font-size: 1.2rem;
+    }
+
+    & input:not(input[type="file"]) {
+      border: 1px solid #ccc;
+      padding: 10px 12px;
+      outline: none;
+      border-radius: 5px;
+      width: 30%;
+    }
+
+    & button {
+      border: none;
+      outline: none;
+      background-color: $second-color;
+      padding: 10px 12px;
+      color: $txt-color;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+  }
+}

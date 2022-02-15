@@ -1,0 +1,59 @@
+@use "../../../scss/" as *;
+
+.dropdown {
+  margin-right: 100px;
+  position: relative;
+
+  &__img {
+    width: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  &__name {
+    display: inline-block;
+    transform: translateY(-10px);
+    font-size: 1rem;
+    font-weight: 600;
+    margin-left: 5px;
+    cursor: pointer;
+  }
+
+  &__content {
+    margin-top: 15px;
+    background-color: $main-bg;
+    box-shadow: $box-shadow;
+    min-width: 200px;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s $transition-cubic;
+    transform: translateY(-200px);
+    border-radius: 10px;
+    position: absolute;
+    z-index: 99;
+
+    &-item {
+      margin-top: 15px;
+      cursor: pointer;
+      padding: 5px 8px;
+      border-radius: 5px;
+    }
+
+    &-item:hover {
+      background-color: $second-color;
+      color: $txt-color !important;
+    }
+
+    &-item:hover span a {
+      color: $txt-color !important;
+    }
+  }
+
+  &__content.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
