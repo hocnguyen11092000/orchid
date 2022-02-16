@@ -21,7 +21,7 @@ import {
 
 function Login(payload: PayloadAction<LoginPayload>) {
   const apiClient = axios.create({
-    baseURL: "https://orchid.tk/api/v1",
+    baseURL: "https://orchid.tk",
     withCredentials: true,
   });
   const config = { headers: { "Content-Type": "application/json" } };
@@ -69,7 +69,7 @@ function* handleResetPassword(action: PayloadAction<ForgotPaload>) {
 
 const Logout = () => {
   const apiClient = axios.create({
-    baseURL: "https://orchid.tk/api/v1",
+    baseURL: "https://orchid.tk",
     withCredentials: true,
     // credentials: "include",
   });
