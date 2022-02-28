@@ -1,15 +1,18 @@
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { Grid } from "@mui/material";
 import orderApi from "api/orderApi";
+import io from "socket.io-client";
+import { useAppDispatch, useAppSelector } from "app/hooks";
 import ProtectedRoute from "components/Common/protected-route/ProtectedRoute";
 import TrSkeleton from "components/Common/tr-skeleton/TrSkeleton";
 import ListOrder from "features/order/pages/ListOrder";
 import { Order } from "models/order";
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import Chart from "react-apexcharts";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Card from "../components/card/Card";
+
 import "./home.scss";
 
 type Props = {};
@@ -76,20 +79,43 @@ const head = [
   "action",
 ];
 
+export const descData = (data: any) => {
+  const temp: Array<any> = [];
+  for (let index = data?.length - 1; index >= 0; index--) {
+    temp.push(data[index]);
+  }
+  return temp;
+};
+
 const Home = (props: Props) => {
   const [status, setStatus] = useState<string>("Processing");
+  const check = useAppSelector((state) => state.socket.check);
   const navigate = useNavigate();
-  const [order, setOrder] = useState<Order[]>();
+  const [newOrder, setNewOrder] = useState<any>();
+  const [order, setOrder] = useState<any>();
+  const [socket, setSocket] = useState<any>();
+
+  useEffect(() => {
+    setSocket(io("http://localhost:5000"));
+  }, []);
+
+  useEffect(() => {
+    socket?.on("server", (data: any) => {
+      const date = new Date();
+      setNewOrder(data.orderItems._id + date.toISOString());
+    });
+  }, [check]);
+
   const [processing, setProcessing] = useState<any>();
   const [delivered, setdelivered] = useState<any>();
   const [refused, setrefused] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     (async () => {
       try {
         const data = await orderApi.getAll();
-        setOrder(data.orders);
+        setOrder(descData(data.orders));
         setProcessing(data.processingCount);
         setdelivered(data.deliveredCount);
         setrefused(data.refusedCount);
@@ -155,7 +181,7 @@ const Home = (props: Props) => {
       </Grid>
       <div className="home__recent-order">
         <h2>Recent Orders</h2>
-        {order && (
+        {
           <ListOrder
             mg={0}
             onChangeStatus={handleChangeStatus}
@@ -163,7 +189,7 @@ const Home = (props: Props) => {
             dataOrders={order}
             loading={loading}
           ></ListOrder>
-        )}
+        }
         <ProtectedRoute></ProtectedRoute>
       </div>
     </div>

@@ -1,13 +1,16 @@
-import { useAppDispatch } from "app/hooks";
+import { Badge, IconButton } from "@mui/material";
+import { useAppDispatch, useAppSelector } from "app/hooks";
 import { logout } from "features/auth/authSlice";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { io } from "socket.io-client";
 import "./dropdown.scss";
 
 type Props = {
-  user: string;
-  content: Array<string>;
-  name: string;
+  user?: string;
+  content?: Array<string>;
+  name?: string;
+  icon?: any;
   _id?: string;
 };
 
@@ -24,6 +27,20 @@ const clickOutSide = (toggleRef: any, contentRef: any) => {
 };
 
 const Dropdown = (props: Props) => {
+  const [socket, setSocket] = useState<any>();
+  const [count, setCount] = useState<number>(0);
+  const check = useAppSelector((state) => state.socket.check);
+
+  useEffect(() => {
+    setSocket(io("http://localhost:5000"));
+  }, []);
+
+  useEffect(() => {
+    socket?.on("server", (data: any) => {
+      setCount(count + 1);
+    });
+  }, [check]);
+
   const dispatch = useAppDispatch();
   const toggleRef = useRef(null);
   const contentRef = useRef(null);
@@ -34,31 +51,37 @@ const Dropdown = (props: Props) => {
     <div className="dropdown">
       <div className="User" ref={toggleRef}>
         <img src={props?.user} alt="" className="dropdown__img" />
-        <span className="dropdown__name">{props?.name}</span>
+        <IconButton sx={{ color: "#fff" }}>
+          <Badge badgeContent={count} color="error">
+            {props.icon}
+          </Badge>
+        </IconButton>
+        {props.icon ? (
+          ""
+        ) : (
+          <span className="dropdown__name">{props?.name}</span>
+        )}
       </div>
 
       <div className="dropdown__content" ref={contentRef}>
-        <ul className="dropdown__content-list">
-          {/* {props?.content.map((item, index) => {
-            return (
-              <li className="dropdown__content-item" key={index}>
-                {item}
-              </li>
-            );
-          })} */}
-          <li className="dropdown__content-item">
-            <span>
-              <NavLink to={`add-edit-user/${props?._id}`}>edit profile</NavLink>
-            </span>
-          </li>
-          <li className="dropdown__content-item">
-            {localStorage.getItem("token") ? (
-              <span onClick={() => dispatch(logout())}>Logout</span>
-            ) : (
-              <NavLink to="/admin/login">Login</NavLink>
-            )}
-          </li>
-        </ul>
+        {props.user && (
+          <ul className="dropdown__content-list">
+            <li className="dropdown__content-item">
+              <span>
+                <NavLink to={`add-edit-user/${props?._id}`}>
+                  edit profile
+                </NavLink>
+              </span>
+            </li>
+            <li className="dropdown__content-item">
+              {localStorage.getItem("token") ? (
+                <span onClick={() => dispatch(logout())}>Logout</span>
+              ) : (
+                <NavLink to="/admin/login">Login</NavLink>
+              )}
+            </li>
+          </ul>
+        )}
       </div>
     </div>
   );

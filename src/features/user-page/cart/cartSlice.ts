@@ -32,6 +32,33 @@ const cartSlice = createSlice({
       }
       Cookies.set("cartItems", JSON.stringify(state.cartItems));
     },
+
+    removeCart(state, action: PayloadAction<string>) {
+      state.cartItems = state.cartItems.filter(
+        (item) => item._id !== action.payload
+      );
+      Cookies.set("cartItems", JSON.stringify(state.cartItems));
+    },
+
+    addQuantity(state, action: PayloadAction<string>) {
+      const item = state.cartItems.find((item) => item._id === action.payload);
+
+      if (item) {
+        item.quantity += 1;
+      }
+    },
+
+    minusQuantity(state, action: PayloadAction<string>) {
+      const item = state.cartItems.find((item) => item._id === action.payload);
+
+      if (item) {
+        item.quantity -= 1;
+      }
+    },
+
+    clearCart(state) {
+      state.cartItems = [];
+    },
   },
 });
 

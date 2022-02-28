@@ -14,7 +14,7 @@ const orderApi = {
   },
 
   add(data: FormData): Promise<Product> {
-    const url = "/admin/product/new";
+    const url = "/order/new";
     return axiosClient.post(url, data);
   },
 

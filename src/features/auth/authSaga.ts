@@ -19,23 +19,23 @@ import {
   resetPasswordFail,
 } from "./authSlice";
 
-function Login(payload: PayloadAction<LoginPayload>) {
-  const apiClient = axios.create({
-    baseURL: "http://localhost:4000",
-    withCredentials: true,
-  });
-  const config = { headers: { "Content-Type": "application/json" } };
-  return apiClient.post(`/api/v1/login`, payload.payload, config);
-}
+// function Login(payload: PayloadAction<LoginPayload>) {
+//   const apiClient = axios.create({
+//     baseURL: "http://localhost:4000",
+//     withCredentials: true,
+//   });
+//   const config = { headers: { "Content-Type": "application/json" } };
+//   return apiClient.post(`/api/v1/login`, payload.payload, config);
+// }
 
-function* handleLogin(payload: PayloadAction<LoginPayload>) {
+function* handleLogin(action: PayloadAction<LoginPayload>) {
   try {
-    const res: User = yield call(Login, payload);
+    const res: User = yield call(userApi.login, action.payload);
 
-    localStorage.setItem("token", res.data.token);
-    localStorage.setItem("currentUser", JSON.stringify(res.data.user));
+    localStorage.setItem("token", res.token);
+    localStorage.setItem("currentUser", JSON.stringify(res.user));
 
-    yield put(loginSuccess(res.data.user));
+    yield put(loginSuccess(res.user));
     yield put(push("/"));
   } catch (error: any) {
     yield put(loginFailed(error.message));
@@ -48,7 +48,6 @@ function* handleResetPassword(action: PayloadAction<ForgotPaload>) {
   if (token) {
     try {
       const res: User = yield call(userApi.resetPassword, token, values);
-      console.log(res.user);
 
       if (res.token) {
         localStorage.setItem("token", res.token);
@@ -67,20 +66,19 @@ function* handleResetPassword(action: PayloadAction<ForgotPaload>) {
   }
 }
 
-const Logout = () => {
-  const apiClient = axios.create({
-    baseURL: "http://localhost:4000",
-    withCredentials: true,
-    // credentials: "include",
-  });
-  return apiClient.get("/api/v1/logout");
-};
+// const Logout = () => {
+//   const apiClient = axios.create({
+//     baseURL: "http://localhost:4000",
+//     withCredentials: true,
+//   });
+//   return apiClient.get("/api/v1/logout");
+// };
 
 function* handleLogout() {
   localStorage.removeItem("token");
   localStorage.removeItem("currentUser");
 
-  yield call(Logout);
+  yield call(userApi.logout);
   yield put(push("/admin/login"));
 }
 

@@ -9,6 +9,7 @@ import counterReducer from "../features/counter/counterSlice";
 import addressReducer from "../features/address/addressSlice";
 import authReducer from "../features/auth/authSlice";
 import userReducer from "../features/user/userSlice";
+import socketReducer from "../features/socket/socketSlice";
 import cartReducer from "../features/user-page/cart/cartSlice";
 import createSagaMiddleware from "redux-saga";
 import rootSaga from "./rootSaga";
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   address: addressReducer,
   user: userReducer,
   cart: cartReducer,
+  socket: socketReducer,
 });
 const routerMiddleware = createRouterMiddleware(browserHistory);
 export const store = configureStore({

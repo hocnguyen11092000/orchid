@@ -7,6 +7,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { QuantityField } from "../../../../components/form-controls/QuantityField";
 import "./detailproduct.scss";
 type Props = {};
@@ -49,7 +50,7 @@ const DetailProduct = (props: Props) => {
       values.price = Number.parseInt(data.product.price);
       values.image = data.product.images[0].url;
       values.discount = Number.parseInt(data.product.discount);
-      values.weight = Number.parseInt(data.product.weight);
+      values.weight = Number.parseFloat(data.product.weight);
     }
     dispatch(cartActions.addToCart(values));
   };

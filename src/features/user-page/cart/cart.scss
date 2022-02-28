@@ -1,0 +1,34 @@
+@use "../../../scss/" as *;
+
+.cart-page {
+  margin: 20px;
+  padding: 20px;
+
+  &__heading {
+    margin: 10px 0;
+  }
+
+  &__total {
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin: 10px 0 20px 0;
+    text-align: right;
+    margin-right: 50px;
+  }
+
+  &__submit {
+    margin-top: 10px;
+    text-align: right;
+    margin-right: 50px;
+
+    & button {
+      border: none;
+      outline: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      color: $txt-color;
+      background-color: $main-color;
+    }
+  }
+}

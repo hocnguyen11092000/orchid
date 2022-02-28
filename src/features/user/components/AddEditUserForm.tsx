@@ -4,6 +4,7 @@ import { InputField } from "components/form-controls/InputFields";
 import { User } from "models";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import EXIF from "exif-js";
 import { useParams } from "react-router-dom";
 
 type Props = {

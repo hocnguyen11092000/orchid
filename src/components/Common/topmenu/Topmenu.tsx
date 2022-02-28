@@ -3,6 +3,7 @@ import { User } from "models";
 import React from "react";
 import Dropdown from "../dropdown/Dropdown";
 import "./topmenu.scss";
+import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 type Props = {};
 
 const Topmenu = (props: Props) => {
@@ -29,6 +30,10 @@ const Topmenu = (props: Props) => {
         }
         content={userData}
         _id={userAuth?._id || userRedux?._id || currentUser?._id}
+      ></Dropdown>
+      <Dropdown
+        icon={<NotificationsNoneIcon color="primary"></NotificationsNoneIcon>}
+        content={userData}
       ></Dropdown>
     </div>
   );

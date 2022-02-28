@@ -12,6 +12,7 @@ import ProductItem from "features/user-page/components/product-item/ProductItem"
 import { ListResponse, Product } from "models";
 import React, { useState } from "react";
 import { useQuery } from "react-query";
+import { descData } from "features/Home/pages/Home";
 import "./listproduct.scss";
 type Props = {};
 
@@ -51,6 +52,8 @@ const ListProduct = (props: Props) => {
   if (data?.productCount) {
     count = Math.ceil(data?.productCount / 8);
   }
+
+  const dataProducts = descData(data?.products);
 
   const handleSubmit = (value: SearchValue) => {
     setFilter({
@@ -116,7 +119,7 @@ const ListProduct = (props: Props) => {
               <Grid container>
                 {isLoading && "Loading..."}
                 {data &&
-                  data.products.map((item: Product, index: number) => {
+                  dataProducts.map((item: Product, index: number) => {
                     return (
                       <Grid item xs={12} sm={12} md={3} key={index}>
                         <ProductItem item={item}></ProductItem>

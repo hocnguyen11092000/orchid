@@ -1,0 +1,53 @@
+@use "../../../scss/" as *;
+
+.check-out {
+  background-color: rgb(240, 240, 240);
+  height: auto;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 15px;
+  margin: 20px 0;
+  border-radius: 5px;
+  box-shadow: $box-shadow;
+  gap: 0 20px;
+
+  &__img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+  }
+
+  &__info {
+    font-size: 0.8rem;
+    max-width: 300px;
+    min-width: 300px;
+
+    & p:first-child {
+      margin-bottom: 10px;
+    }
+  }
+
+  &__total {
+    font-size: 0.9rem;
+  }
+}
+
+.check-out-btn {
+  text-align: right;
+
+  & button {
+    border: none;
+    outline: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: $txt-color;
+    background-color: $main-color;
+  }
+}

@@ -1,7 +1,12 @@
+import { LoginPayload } from "./../features/auth/authSlice";
 import { Address, ListParams, ListResponse, User } from "models";
 import axiosClient from "./axiosClient";
 
 const userApi = {
+  login(params: LoginPayload): Promise<ListResponse<User>> {
+    const url = "/login";
+    return axiosClient.post(url, params);
+  },
   getAll(params: ListParams): Promise<ListResponse<User>> {
     const url = "/admin/users";
     return axiosClient.get(url, { params });
@@ -30,6 +35,10 @@ const userApi = {
   remove(id: string): Promise<any> {
     const url = `/admin/user/${id}`;
     return axiosClient.delete(url);
+  },
+  logout(): Promise<any> {
+    const url = `/logout`;
+    return axiosClient.get(url);
   },
 
   forgotPassword(email: any): Promise<any> {

@@ -6,14 +6,18 @@ import {
   Select,
   Skeleton,
 } from "@mui/material";
-import { useAppSelector } from "app/hooks";
+import { useAppDispatch, useAppSelector } from "app/hooks";
+import AddIcon from "@mui/icons-material/Add";
 import { Address, ListParams, Product, User } from "models";
 import { Order } from "models/order";
 import React, { useState } from "react";
 import Popup from "../popup/Popup";
 import "./table.scss";
+import RemoveIcon from "@mui/icons-material/Remove";
 import CloseIcon from "@mui/icons-material/Close";
 import TrSkeleton from "../../Common/tr-skeleton/TrSkeleton";
+import { cartActions } from "features/user-page/cart/cartSlice";
+import { RemoveCircle } from "@mui/icons-material";
 
 export interface CartItem {
   _id: string;
@@ -66,6 +70,7 @@ const Table = (props: Props) => {
     loadingStatus,
   } = props;
 
+  const dispatch = useAppDispatch();
   const loading = useAppSelector((state) => state.product.loading);
   let totalPage = 0;
   if (count) {
@@ -114,6 +119,21 @@ const Table = (props: Props) => {
       await onDeleteOrder(id);
     }
   };
+
+  const handleRemoveCart = (id: string) => {
+    if (window.confirm("Remove item ?")) {
+      dispatch(cartActions.removeCart(id));
+    }
+  };
+
+  const handleAddQuantity = (id: string) => {
+    dispatch(cartActions.addQuantity(id));
+  };
+
+  const handleMinusQuantity = (id: string) => {
+    dispatch(cartActions.minusQuantity(id));
+  };
+
   return (
     <div className="table">
       <Popup active={popup}>
@@ -282,30 +302,41 @@ const Table = (props: Props) => {
                     <img src={item.image} alt={item.name} width="60px" />
                   </td>
                   <td>{item.price}</td>
-                  <td>{item.quantity}</td>
+                  <td
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      height: "80px",
+                      width: "100px",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <span>
+                      <RemoveIcon
+                        sx={{ cursor: "pointer" }}
+                        onClick={() => handleMinusQuantity(item._id)}
+                      ></RemoveIcon>
+                    </span>
+                    {item.quantity}
+                    <span>
+                      <AddIcon
+                        sx={{ cursor: "pointer" }}
+                        onClick={() => handleAddQuantity(item._id)}
+                      ></AddIcon>
+                    </span>
+                  </td>
                   <td>{item.weight} kg</td>
                   <td>{item.discount}%</td>
                   <td>
-                    {((item.price * (100 - item.discount)) / 100) *
-                      item.quantity}
+                    {(
+                      ((item.price * (100 - item.discount)) / 100) *
+                      item.quantity
+                    ).toFixed(3)}
                     .000đ
                   </td>
-                  <td
-                    style={{ cursor: "pointer" }}
-                    onClick={() => handleEditOrder(item._id)}
-                  >
-                    <span className="table-edit">Sửa</span>
+                  <td onClick={() => handleRemoveCart(item._id)}>
+                    <span className="table-delete">Xóa</span>
                   </td>
-                  {loading ? (
-                    <td>Đang xóa...</td>
-                  ) : (
-                    <td
-                      style={{ cursor: "pointer" }}
-                      onClick={() => hadleDeleteOrder(item._id)}
-                    >
-                      <span className="table-delete">Xóa</span>
-                    </td>
-                  )}
                 </tr>
               );
             })}

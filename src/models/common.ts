@@ -1,3 +1,4 @@
+import { User } from "models";
 import { Order } from "./order";
 
 export interface PaginationParams {
@@ -18,6 +19,8 @@ export interface ListResponse<T> {
   deliveredCount?: number;
   refusedCount?: number;
   category?: Array<string>;
+  token?: string;
+  user?: User;
 }
 
 export interface ListParams {

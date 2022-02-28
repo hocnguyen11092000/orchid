@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { descData } from "features/Home/pages/Home";
 import { ListParams, ListResponse, Product } from "models";
 
 export interface ProductState {
@@ -28,7 +29,7 @@ const productSlice = createSlice({
       state,
       action: PayloadAction<ListResponse<Product>>
     ) {
-      state.list = action.payload.products;
+      state.list = descData(action.payload.products);
       state.productCount = action.payload.productCount;
       state.loading = false;
     },
