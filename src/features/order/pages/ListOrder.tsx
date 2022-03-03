@@ -1,9 +1,10 @@
 import orderApi from "api/orderApi";
-import { useAppSelector } from "app/hooks";
+import { useAppDispatch, useAppSelector } from "app/hooks";
 import Table from "components/Common/table/Table";
 import { descData } from "features/Home/pages/Home";
+import { socketAcions } from "features/socket/socketSlice";
 import { Order } from "models/order";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import io from "socket.io-client";
@@ -30,21 +31,22 @@ const head = [
 
 const ListOrder = (props: Props) => {
   const [socket, setSocket] = useState<any>();
+
   const check = useAppSelector((state) => state.socket.check);
+
   useEffect(() => {
     setSocket(io("http://localhost:5000"));
   }, []);
-
-  const [order, setOrder] = useState<Order[]>();
-  const [newOrder, setNewOrder] = useState<any>();
+  const dispatch = useAppDispatch();
+  const [order, setOrder] = useState<any>();
+  const [newOrder, setNewOrder] = useState<any>("");
   const [render, setRender] = useState<boolean>(false);
 
-  useEffect(() => {
-    socket?.on("server", (data: any) => {
-      const date = new Date();
-      setNewOrder(data.orderItems._id + date.toISOString());
-    });
-  }, [check]);
+  socket?.on("server", (data: any) => {
+    if (data != newOrder) {
+      setNewOrder(data);
+    }
+  });
 
   useEffect(() => {
     (async () => {
@@ -56,6 +58,7 @@ const ListOrder = (props: Props) => {
       }
     })();
   }, [render, newOrder]);
+  console.log("re render");
 
   const handleDeleteOrder = async (id: string) => {
     try {

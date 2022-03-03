@@ -15,7 +15,12 @@ const socketSlice = createSlice({
   reducers: {
     sendData(state, action: PayloadAction<any>) {
       state.data.push(action.payload);
-      state.check = state.check + 1;
+    },
+    setCheck(state) {
+      state.check += 1;
+    },
+    setCheck2(state) {
+      state.check += 1;
     },
   },
 });

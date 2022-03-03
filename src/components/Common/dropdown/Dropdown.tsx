@@ -35,12 +35,6 @@ const Dropdown = (props: Props) => {
     setSocket(io("http://localhost:5000"));
   }, []);
 
-  useEffect(() => {
-    socket?.on("server", (data: any) => {
-      setCount(count + 1);
-    });
-  }, [check]);
-
   const dispatch = useAppDispatch();
   const toggleRef = useRef(null);
   const contentRef = useRef(null);
@@ -51,11 +45,13 @@ const Dropdown = (props: Props) => {
     <div className="dropdown">
       <div className="User" ref={toggleRef}>
         <img src={props?.user} alt="" className="dropdown__img" />
-        <IconButton sx={{ color: "#fff" }}>
-          <Badge badgeContent={count} color="error">
-            {props.icon}
-          </Badge>
-        </IconButton>
+        {props.icon ? (
+          <IconButton sx={{ color: "#fff" }}>
+            <Badge badgeContent={check} color="error">
+              {props.icon}
+            </Badge>
+          </IconButton>
+        ) : null}
         {props.icon ? (
           ""
         ) : (

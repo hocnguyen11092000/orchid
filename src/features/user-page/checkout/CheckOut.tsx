@@ -6,14 +6,19 @@ import { toast } from "react-toastify";
 import "./checkout.scss";
 import ShippingForm from "./components/ShippingForm";
 import Cookies from "js-cookie";
-import { useAppDispatch } from "app/hooks";
+import { useAppDispatch, useAppSelector } from "app/hooks";
 import { cartActions } from "../cart/cartSlice";
 import io from "socket.io-client";
 import { socketAcions } from "features/socket/socketSlice";
-type Props = {};
+type Props = {
+  onChange?: (x: any) => void;
+};
 
 const CheckOut = (props: Props) => {
+  const { onChange } = props;
   const [socket, setSocket] = useState<any>();
+  const check = useAppSelector((state) => state.socket.check);
+  console.log(check);
 
   useEffect(() => {
     setSocket(io("http://localhost:5000"));
@@ -22,19 +27,21 @@ const CheckOut = (props: Props) => {
   const { state } = useLocation() as any;
   const dispatch = useAppDispatch();
 
-  const cartItems = state.cartItems;
+  const cartItems = state?.cartItems;
+
   const total = cartItems.reduce(
     (x: number, y: any) =>
       x + y.price * y.quantity - (y.price * y.quantity * y.discount) / 100,
     0
   );
-
   const sum = total + 30;
 
   const handleFormSubmit = async (values: any) => {
     cartItems.forEach((item: any) => {
       item.product = item._id;
     });
+    console.log(cartItems);
+
     const data: any = {
       itemsPrice: total,
       shippingPrice: 30,
@@ -50,12 +57,19 @@ const CheckOut = (props: Props) => {
       await orderApi.add(data);
       Cookies.remove("cartItems");
       dispatch(cartActions.clearCart());
-      socket.emit("sendOrder", data);
       dispatch(socketAcions.sendData(data));
+      dispatch(socketAcions.setCheck());
+      socket.emit("sendOrder", Math.random());
       toast.success("successfully");
+      localStorage.setItem("socket", Math.random().toString());
     } catch (error) {
       toast.error("fail to add order");
     }
+  };
+
+  const handleClick = () => {
+    // dispatch(socketAcions.setCheck());
+    socket.emit("sendOrder", Math.random());
   };
 
   return (
@@ -73,30 +87,39 @@ const CheckOut = (props: Props) => {
           <Paper elevation={0} sx={{ padding: "20px" }}>
             <Typography>Shipping cart</Typography>
             <Box>
-              {cartItems.map((item: any, index: number) => {
-                return (
-                  <div className="item" key={index}>
-                    <img src={item.image} alt="" className="item__img" />
-                    <div className="item__info">
-                      <p>{item.name}</p>
-                      <p>{item.quantity}</p>
+              {cartItems &&
+                cartItems.map((item: any, index: number) => {
+                  return (
+                    <div className="item" key={index}>
+                      <img src={item.image} alt="" className="item__img" />
+                      <div className="item__info">
+                        <p>{item.name}</p>
+                        <p>{item.quantity}</p>
+                      </div>
+                      <p className="item__total">
+                        {(
+                          ((item.price * (100 - item.discount)) / 100) *
+                          item.quantity
+                        ).toFixed(3)}
+                        .đ
+                      </p>
                     </div>
-                    <p className="item__total">
-                      {(
-                        ((item.price * (100 - item.discount)) / 100) *
-                        item.quantity
-                      ).toFixed(3)}
-                      .đ
-                    </p>
-                  </div>
-                );
-              })}
+                  );
+                })}
               <h3>Shipping price: 30.000đ</h3>
               <h3 style={{ margin: "15px 0" }}>Total: {sum.toFixed(3)}đ</h3>
             </Box>
           </Paper>
         </Grid>
       </Grid>
+      <Button
+        color="primary"
+        variant="contained"
+        size="small"
+        onClick={handleClick}
+      >
+        click
+      </Button>
     </div>
   );
 };

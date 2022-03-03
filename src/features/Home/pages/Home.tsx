@@ -7,13 +7,20 @@ import ProtectedRoute from "components/Common/protected-route/ProtectedRoute";
 import TrSkeleton from "components/Common/tr-skeleton/TrSkeleton";
 import ListOrder from "features/order/pages/ListOrder";
 import { Order } from "models/order";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState,
+} from "react";
 import Chart from "react-apexcharts";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Card from "../components/card/Card";
 
 import "./home.scss";
+import CheckOut from "features/user-page/checkout/CheckOut";
 
 type Props = {};
 
@@ -90,26 +97,44 @@ export const descData = (data: any) => {
 const Home = (props: Props) => {
   const [status, setStatus] = useState<string>("Processing");
   const check = useAppSelector((state) => state.socket.check);
+  const count = useAppSelector((state) => state.cart.cartItems);
+
   const navigate = useNavigate();
   const [newOrder, setNewOrder] = useState<any>();
-  const [order, setOrder] = useState<any>();
+  const [order, setOrder] = useState<any>([]);
   const [socket, setSocket] = useState<any>();
 
   useEffect(() => {
     setSocket(io("http://localhost:5000"));
   }, []);
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   // socket?.on("server", (data: any) => {
+  //   //   const date = new Date();
+  //   //   setNewOrder(data.orderItems._id + date.toISOString());
+  //   // });
+  //   console.log(123);
+  // }, [check]);
+  const handleOn = () => {
     socket?.on("server", (data: any) => {
       const date = new Date();
-      setNewOrder(data.orderItems._id + date.toISOString());
+      console.log(data + date.toISOString());
+
+      // const date = new Date();
+      // setOrder(descData([...order, data]));
+      // setNewOrder(data);
     });
-  }, [check]);
+  };
+  //
+
+  useCallback(handleOn, [newOrder]);
+  // console.log("re render");
 
   const [processing, setProcessing] = useState<any>();
   const [delivered, setdelivered] = useState<any>();
   const [refused, setrefused] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
+  const [another, setAnother] = useState<any>();
 
   useEffect(() => {
     (async () => {
@@ -123,7 +148,7 @@ const Home = (props: Props) => {
         console.log("Error: " + error);
       }
     })();
-  }, [status]);
+  }, [status, newOrder]);
 
   const CardList: Array<CardList> = [
     {

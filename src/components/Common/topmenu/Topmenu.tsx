@@ -9,6 +9,7 @@ type Props = {};
 const Topmenu = (props: Props) => {
   let user = localStorage.getItem("currentUser");
 
+  let count = useAppSelector((state) => state.socket.check);
   let currentUser;
   if (user) {
     currentUser = JSON.parse(user);
@@ -35,6 +36,7 @@ const Topmenu = (props: Props) => {
         icon={<NotificationsNoneIcon color="primary"></NotificationsNoneIcon>}
         content={userData}
       ></Dropdown>
+      {/* <span>{count}</span> */}
     </div>
   );
 };
