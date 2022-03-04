@@ -2,10 +2,6 @@
   "name": "orchid",
   "version": "0.1.0",
   "private": true,
-  "engines": {
-    "node": "14.19.0",
-    "yarn": "1.22.17"
-  },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "19.0.0",
     "@ckeditor/ckeditor5-react": "2.1.0",
