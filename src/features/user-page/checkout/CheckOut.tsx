@@ -18,7 +18,6 @@ const CheckOut = (props: Props) => {
   const { onChange } = props;
   const [socket, setSocket] = useState<any>();
   const check = useAppSelector((state) => state.socket.check);
-  console.log(check);
 
   useEffect(() => {
     setSocket(io("http://localhost:5000"));
@@ -40,7 +39,6 @@ const CheckOut = (props: Props) => {
     cartItems.forEach((item: any) => {
       item.product = item._id;
     });
-    console.log(cartItems);
 
     const data: any = {
       itemsPrice: total,
@@ -55,6 +53,7 @@ const CheckOut = (props: Props) => {
     };
     try {
       await orderApi.add(data);
+
       Cookies.remove("cartItems");
       dispatch(cartActions.clearCart());
       dispatch(socketAcions.sendData(data));
