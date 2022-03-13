@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
 const axiosClient = axios.create({
-  baseURL: "http://localhost:4000/api/v1",
+  baseURL: "https://orchid/api/v1",
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
